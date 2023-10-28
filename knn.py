@@ -27,7 +27,7 @@ class KNN:
       distance = self.euclidean_distance(x,train)
       distances.append(distance)
     min_distance_indices = sorted(range(len(distances)), key=lambda index: distances[index])[:self.k]
-    min_distances = sorted(distance)[:self.k]
+    min_distances = sorted(distances)[:self.k]
     print(min_distance_indices)
     min_distance_labels = []
     for i in min_distance_indices:
@@ -37,10 +37,11 @@ class KNN:
       most_common = {}
       for i in range(len(min_distance_labels)):
         current_label = min_distance_labels[i]
-        if current_label not in most_common.keys():
-          most_common[current_label] = 1/min_distances[i]
-        else:
-          most_common[current_label] += 1/min_distances[i]
+        if min_distances[i]!=0:
+          if current_label not in most_common.keys():
+            most_common[current_label] = 1/min_distances[i]
+          else:
+            most_common[current_label] += 1/min_distances[i]
       return max(most_common, key = lambda x:most_common[x])
     else:
       most_common = {}
